@@ -13,7 +13,7 @@ module.exports = {
       keyframes: {
         'float-slow': {
           '0%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(50px)' },
+          '50%': { transform: 'translateY(40px)' },
           '100%': { transform: 'translateY(0px)' },
         },
         'float-fast': {

@@ -1,79 +1,168 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
+import React from "react";
+import { useState, useEffect } from "react";
 const Top = () => {
-  const placeholders = ["UI/UX", "Frontend Developer", " Backend Developer", "Full Stack Developer"];
+  const placeholders = [
+    "UI/UX",
+    "Frontend Developer",
+    " Backend Developer",
+    "Full Stack Developer",
+  ];
   const [currentPlaceholder, setCurrentPlaceholder] = useState("");
   const [index, setIndex] = useState(0);
-  const images = ["swayam.png", "nasscom.png", "CII.png", "nsdc-logo.png","URstory.png","IHSFC.png"];
+  const images = [
+    "swayam.png",
+    "nasscom.png",
+    "CII.png",
+    "nsdc-logo.png",
+    "URstory.png",
+    "IHSFC.png",
+  ];
   const [currentImages, setCurrentImages] = useState(images);
   const [fadeOut, setFadeOut] = useState(false);
- 
+  const headings = [
+    "Unlock Tech Skills with Real-World Experience",
+    "Boost Your Career with Industry-Focused Training",
+    "Master In-Demand Skills for Tech Success",
+    "Transform Your Future in Technology",
+  ];
+  const [currentHeading, setCurrentHeading] = useState(headings[0]);
+  const [bgColors, setBgColors] = useState([
+    "#0c171b",
+    "#1a2a33",
+    "#2c3e50",
+    "#34495e",
+  ]);
+  const [currentBgColor, setCurrentBgColor] = useState(bgColors[0]);
+  const descriptions = [
+    "Bridge the gap between learning and employment with industry-focused courses, mentorship, and job placement opportunities.",
+    "Enhance your skills with practical training designed to meet industry demands and boost your career prospects.",
+    "Gain hands-on experience and master cutting-edge technologies to become a sought-after tech professional.",
+    "Embark on a transformative journey to build a successful career in the ever-evolving tech industry.",
+  ];
+  const [currentDescription, setCurrentDescription] = useState(descriptions[0]);
+  const [personImages, setPersonImages] = useState([
+    "man.png",
+    "woman2.png",
+    "man.png",
+    "woman2.png",
+  ]);
+  const [currentPersonImage, setCurrentPersonImage] = useState(personImages[0]);
+  const [showFirstPair, setShowFirstPair] = useState(true);
+
   useEffect(() => {
     const update = () => {
-        setFadeOut(true);
-        setTimeout(() => {
-            setCurrentPlaceholder(placeholders[index]);
-            setIndex((prevIndex) => (prevIndex + 1) % placeholders.length);
-            setCurrentImages(prevImages => {
-                const rotated = [...prevImages];
-                rotated.push(rotated.shift());
-                return rotated;
-            });
-            setFadeOut(false);
-        }, 500); // Half of the interval time
+      setFadeOut(true);
+      setTimeout(() => {
+        setCurrentPlaceholder(placeholders[index]);
+        setCurrentHeading(headings[index]);
+        setCurrentBgColor(bgColors[index]);
+        setCurrentDescription(descriptions[index]);
+        setCurrentPersonImage(personImages[index]);
+        setIndex((prevIndex) => (prevIndex + 1) % placeholders.length);
+        setCurrentImages((prevImages) => {
+          const rotated = [...prevImages];
+          rotated.push(rotated.shift());
+          return rotated;
+        });
+        setShowFirstPair((prev) => !prev);
+        setFadeOut(false);
+      }, 700); // Half of the interval time
     };
 
     const interval = setInterval(update, 2000);
 
     return () => clearInterval(interval);
-}, [index]);
+  }, [index]);
 
   return (
-    <div className=" min-h-screen flex flex-col lg:flex-row justify-center p-7 items-center bg-white font-poppins  ">
-    <div className=" h-full w-full p-14 lg:p-20  text-center bg-[#0c171b] lg:rounded-tr-[50px] lg:rounded-tl-[50px] lg:rounded-bl-[150px] lg:rounded-br-[0px] rounded-[50px]  lg:items-start 
+    <div className=" min-h-screen flex flex-col lg:flex-row justify-center p-7 items-center font-poppins overflow-hidden ">
+      <div
+        className={`h-[550px] w-full p-14 lg:p-20  text-center bg-[#0c171b] lg:rounded-tr-[50px] lg:rounded-tl-[50px] lg:rounded-bl-[150px] lg:rounded-br-[0px] rounded-[50px]  lg:items-start 
     lg:ml-20 lg:w-full
-    ">
+    transition-all duration-1000 ${
+      fadeOut ? "-translate-x-[150%] opacity-0" : "translate-x-0 opacity-100"
+    }`}
+      >
+        <h1
+          className={` lg:mt-2 mt-5 text-3xl lg:text-5xl font-bold text-white text-center lg:text-start  tracking-wide sm:leading-normal  lg:tracking-wide transition-all duration-500 ${
+            fadeOut ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          {" "}
+          {currentHeading}{" "}
+        </h1>
+        <p
+          className={`mt-9 lg:mt-14 text-white text-xl text-center lg:text-start tracking-wide lg:max-w-2xl transition-all duration-500 ${
+            fadeOut ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          {currentDescription}
+        </p>
+      </div>
+
+      {/* Side Elements */}
+      <div
+        className={`hidden xl:block relative lg:w-2/3 w-[90%]  items-center lg:-ml-3 mt-2 mr-10 transition-all duration-1000 ${
+          fadeOut ? "translate-x-[150%]" : "translate-x-[0]"
+        } 
+           `}
+      >
+        {/* companies logos */}
+        {showFirstPair ? (
+          <>
+            <div
+              className={`absolute top-10 left-7 w-24 lg:w-32 z-30 transition-opacity duration-500 ${
+                fadeOut ? "opacity-0" : "opacity-100"
+              } animate-float-fast`}
+            >
+              <img src={currentImages[0]} alt="" className="w-full h-auto" />
+            </div>
+            <div
+              className={`absolute bottom-10 right-10 w-24 lg:w-32 z-30 transition-opacity duration-500 ${
+                fadeOut ? "opacity-0" : "opacity-100"
+              } animate-float-fast`}
+            >
+              <img src={currentImages[1]} alt="" className="w-full h-auto" />
+            </div>
+          </>
+        ) : (
+          <>
+            <div
+              className={`absolute mt-80 left-6 w-24 lg:w-32 z-30 transition-opacity duration-500 ${
+                fadeOut ? "opacity-0" : "opacity-100"
+              } animate-float-fast`}
+            >
+              <img src={currentImages[2]} alt="" className="w-full h-auto" />
+            </div>
+            <div
+              className={`absolute top-10 -right-5 lg:right-16 w-24 lg:w-32 z-30 transition-opacity duration-500 ${
+                fadeOut ? "opacity-0" : "opacity-100"
+              } animate-float-fast`}
+            >
+              <img src={currentImages[3]} alt="" className="w-full h-auto" />
+            </div>
+          </>
+        )}
+
+        <div>
+          <img
+            src="rec1.png"
+            alt=""
+            className={` absolute -mt-9 ml-5  w-[440px] h-[508px] animate-float-slow ${
+              fadeOut ? "translate-x-[100%]" : "translate-x-[0]  "
+            } `}
+          />
+          <img
+            src={currentPersonImage}
+            alt="Job Portal" 
+            className={`relative right-7 top-0 h-full w-auto z-10 animate-float-slow transition-all 
+            `}
+          />
+        </div>
+      </div>
       
-      <h1 className=" lg:mt-2 mt-5 text-3xl lg:text-5xl font-bold text-white text-center lg:text-start  tracking-wide sm:leading-normal  lg:tracking-wide">Unlock Tech Skills with Real-World Experience</h1>
-      <p className=" mt-3 lg:mt-10  text-white text-xl text-center lg:text-start tracking-wide ">
-      Bridge the gap between learning and employment with industry- <br /> focused courses, mentorship, and job placement opportunities
-      </p>
-
-      {/* Search Bar */}
-      <div className=" bg-white rounded-lg shadow-xl lg:p-1 p-2 flex lg:flex-row flex-col justify-center items-center lg:gap-28 lg:mt-24 mt-10 max-w-xl ">
-        <input type="text" placeholder="Select your course" className=" outline-none w-full lg:w-[350px]  p-2 lg:p-3" />
-        <button className="lg:px-5  bg-[#1DBF73] text-white rounded-lg font-semibold shadow-lg px-12 py-2">Find now</button>
-      </div>
-
-      {/* Popular Searches */}
-      <div className={`lg:mt-5 text-sm mt-5 text-white lg:text-left text-center `}>
-      Popular Searches: <span className={`transition-all duration-500 ${fadeOut ? 'opacity-0' : 'opacity-100'}`} style={{ color: '#1DBF73' }}>{currentPlaceholder}</span>
-      </div>
     </div>
+  );
+};
 
-    {/* Side Elements */}
-    <div className=" hidden xl:block relative lg:w-2/3 w-[90%]  items-center lg:-ml-3 mt-10 mr-10">
-      {/* Notification Cards */}
-        <div className={`absolute left-10 top-8 w-24 lg:w-32 z-30 transition-opacity duration-500 transform ${fadeOut ? 'opacity-0' : 'opacity-100 '} animate-float-rendom`}>
-                <img src={currentImages[0]} alt="" className="w-full h-auto" />
-            </div>
-            <div className={`absolute mt-80 left-6 w-24 lg:w-32 z-30 transition-opacity duration-500 ${fadeOut ? 'opacity-0' : 'opacity-100'} animate-float-fast`}>
-                <img src={currentImages[3]} alt="" className="w-full h-auto" />
-            </div>
-            <div className={`absolute lg:w-32 w-24 lg:bottom-10 bottom-12 right-10 rounded-lg z-30 mb-12 transition-opacity duration-500 ${fadeOut ? 'opacity-0' : 'opacity-100'} animate-float-rendom`}>
-                <img src={currentImages[2]} alt="" className="w-full h-auto" />
-            </div>
-            <div className={`absolute top-10 -right-5 lg:right-16 w-24 lg:w-32 z-30 transition-opacity duration-500 ${fadeOut ? 'opacity-0' : 'opacity-100'} animate-float-fast`}>
-                <img src={currentImages[1]} alt="" className="w-full h-auto" />
-            </div>
-       
-      {/* User Image Placeholder */}
-      <img src="rec1.png" alt=""  className=' absolute -mt-8 ml-5  w-[440px] h-[500px] animate-float-slow'/>
-      <img src="rec2.png" alt=""  className=' absolute -mt-5 ml-9  w-[440px] h-[500px]  animate-float-slow'/>
-      <img  src="wooman.png" alt="Job Portal" className=" relative left-1 lg:left-11 top-12 lg:-top-6 w-[355px] z-10 animate-float-slow " />
-    </div>
-  </div>
-  )
-}
-
-export default Top
+export default Top;
